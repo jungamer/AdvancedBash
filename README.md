@@ -16,7 +16,7 @@ case "$variable" in
     xyz) echo "\$variable = xyz";;
 esac
 ```
-<h2 name="2">1 IF语句</h2>
+<h2 name="2">2 IF语句</h2>
 ```bash
 if grep -q User test.txt; then
     echo "test.txt contains at least one occurrence of User."
