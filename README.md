@@ -37,13 +37,13 @@ status)是"true"(0).
 
 ## IF语句
 
-if grep -q User test.txt
-then
+```bash
+if grep -q User test.txt; then
     echo "test.txt contains at least one occurrence of User."
 fi
 因为如果test.txt中存在User, 则grep返回0(linux 一般用0表示成功), 否则返回1。
 -q选项用来禁止输出。
-
+```
 sentences=Linux
 word=inu
 if echo "$sentences" | grep -q "$word"
