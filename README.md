@@ -17,6 +17,7 @@ case "$variable" in
 esac
 ```
 <h2 name="2">2 IF语句</h2>
+
 ```bash
 if grep -q User test.txt; then
     echo "test.txt contains at least one occurrence of User."
@@ -98,6 +99,7 @@ if [ condition-true ]
 [[ ]]比[ ]结构更通用, 且 &&, ||, <, 和> 操作符能够正常存在于[[ ]]条件判断结构中, 但在[ ]结构中会报错.
 
 <h3 name="2.1">2.1 文件测试</h3>
+
 ```bash
 if [[ -e /etc/passwd ]]; then
     echo "exist passwd file"
