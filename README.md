@@ -41,9 +41,9 @@ status)是"true"(0).
 if grep -q User test.txt; then
     echo "test.txt contains at least one occurrence of User."
 fi
-因为如果test.txt中存在User, 则grep返回0(linux 一般用0表示成功), 否则返回1。
+如果test.txt中存在User, 则grep返回0(linux 一般用0表示成功), 否则返回1。
 -q选项用来禁止输出。
-```
+
 sentences=Linux
 word=inu
 if echo "$sentences" | grep -q "$word"
@@ -115,7 +115,7 @@ if test condition-true结构与if [ condition-true ]完全相同。
 [[ ]]结构比[ ]结构更加通用.
 &&, ||, <, 和> 操作符能够正常存在于[[ ]]条件判断结构中, 但是如果出现在[ ]结构中
 的话, 会报错.
-
+```
 ### 文件测试操作符
 if [[ -e /etc/passwd ]]; then
     echo "exist passwd file"
