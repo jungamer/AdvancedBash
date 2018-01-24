@@ -5,8 +5,8 @@
 - [数字常量](#数字常量)
 - [循环与分支](#循环与分支)
 
-##分支选择
-case "$variable" in
+## 分支选择
+case "$variable" in  
     abc) echo "\$variable = abc";;
     xyz) echo "\$variable = xyz";;
 esac
@@ -32,7 +32,7 @@ status)是"true"(0).
 4 take-some-action
 5 fi
 
-##IF语句
+## IF语句
 
 if grep -q User test.txt
 then
