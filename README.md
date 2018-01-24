@@ -6,10 +6,13 @@
 - [循环与分支](#循环与分支)
 
 ## 分支选择
+
+```bash
 case "$variable" in  
     abc) echo "\$variable = abc";;
     xyz) echo "\$variable = xyz";;
 esac
+```
 
 部分引用[双引号, 即"]. "STRING"将会阻止(解释)STRING中大部分特殊的字符.
 
