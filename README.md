@@ -184,3 +184,207 @@ let "n++"
 Bash 不能处理浮点运算, 脚本中用bc或数学库才行
 
 <h2 name="4">4 循环与分支</h2>
+
+for arg in [list] #list中的参数允许包含通配符.
+do
+    command(s)
+done
+
+```bash
+for planet in Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune Pluto; do
+    echo $planet # 每个行星都被单独打印在一行上.
+done
+
+for planet in "Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune Pluto"
+do
+    echo $planet # 整个'list'都被双引号封成了一个变量.
+done
+
+for planet in "Mercury 36" "Venus 67" "Earth 93" "Mars 142" "Jupiter 483"
+do
+    IFS="*" 
+    set -- $planet 
+    echo "$1 $2"
+done
+#说明：set -- "$X"就是把X的值返回给$1; set -- $X就是把X作为一个表达式的值一一返回,根据分隔符IFS，把值依次赋给$1,$2,$3。如可以IFS="*"。
+
+IFS=:
+for dir in $PATH;do
+    ls -ld $dir
+done
+
+for dir in $PATH; do
+    if [ -z "$dir" ]; then dir=.; fi
+    if ! [ -e "$dir" ]; then
+        echo "$dir doesn't exist"
+    elif ! [ -d "$dir" ]; then
+        echo "$dir isn't a directory"
+    else
+        ls -ld $dir
+    fi
+done
+
+for file in [jx]*
+do
+    rm -f $file # 删除当前目录下以"j"或"x"开头的文件.
+done
+
+#忽略in [list]部分的话, 将会使循环操作$@(从命令行传递给脚本的位置参数)
+for a; do
+    echo "$a "
+done
+
+#也可以使用命令替换 来产生for循环的[list].
+NUMBERS="9 7 3 8 37.53"
+for number in `echo $NUMBERS`; do
+    echo -n "$number "
+done
+
+
+directory=/usr/bin/
+fstring="Free Software Foundation" # 查看哪个文件中包含FSF.
+for file in $( find $directory -type f -name '*' | sort )
+do
+    strings -f $file | grep "$fstring" | sed -e "s%$directory%%"
+done
+# 在"sed"表达式中,
+#+ 我们必须替换掉正常的替换分隔符"/",
+#+ 因为"/"碰巧是我们需要过滤的字符串之一.
+# 如果不用"%"代替"/"作为分隔符,那么这个操作将失败,并给出一个错误消息.(试一
+试).
+
+OUTFILE=symlinks.list # 保存符号链接文件名的文件
+directory=${1-`pwd`}
+for file in "$( find $directory -type l )" # -type l = 符号链接
+do
+    echo "$file"
+done | sort >> "$OUTFILE"
+
+LIMIT=10
+for ((a=1, b=1; a <= LIMIT ; a++, b++))
+do
+    echo -n "$a-$b "
+done
+
+```
+WHILE
+```bash
+while [condition]
+do
+    command...
+done
+
+LIMIT=10
+a=1
+
+while [ "$a" -le $LIMIT ]; do
+    echo -n "$a "
+    let "a+=1"
+echo;
+
+((a = 1))
+while (( a <= LIMIT ))
+do
+    echo -n "$a "
+    ((a += 1))
+done
+```
+until
+#这个结构在循环的顶部判断条件, 并且如果条件一直为false, 那么就一直循环下去. (与while循环相反).
+until [condition-is-true]
+do
+    command...
+done
+
+#!/bin/bash
+
+LIMIT=19 # 上限
+
+echo
+echo "Printing Numbers 1 through 20 (but not 3 and 11)."
+
+a=0
+
+while [ $a -le "$LIMIT" ]
+do
+a=$(($a+1))
+
+if [ "$a" -eq 3 ] || [ "$a" -eq 11 ] # 除了3和11.
+then
+continue # 跳过本次循环剩余的语句.
+fi
+
+echo -n "$a " # 在$a等于3和11的时候，这句将不会执行.
+done
+
+# 练习:
+# 为什么循环会打印出20?
+
+echo; echo
+
+echo Printing Numbers 1 through 20, but something happens after 2.
+
+##################################################################
+
+# 同样的循环, 但是用'break'来代替'continue'.
+
+a=0
+
+while [ "$a" -le "$LIMIT" ]
+do
+a=$(($a+1))
+
+if [ "$a" -gt 2 ]
+then
+break # 将会跳出整个循环.
+fi
+
+echo -n "$a "
+done
+
+echo; echo;
+
+break命令可以带一个参数. 一个不带参数的break命令只能退出最内层的循环, 而break N可以
+退出N层循环.
+而continue N将会把N层循环的剩余代码都去掉, 但是循环的次数不变
+
+
+case "$variable" in
+    $condition1" )
+    command
+    ;
+    $condition2" )
+    command
+    ;
+esac
+对变量使用""并不是强制的, 因为不会发生单词分割.
+每句测试行, 都以右小括号)来结尾.
+每个条件判断语句块都以一对分号结尾 .
+case块以esac (case的反向拼写)结尾.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
