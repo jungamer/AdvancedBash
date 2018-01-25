@@ -275,6 +275,7 @@ done
 
 ```
 <h2 name="5">5 WHILE语句</h2>
+
 ```bash
 while [condition]
 do
@@ -296,6 +297,7 @@ done
 ```
 <h2 name="6">6 UNTIL语句</h2>
 这个结构在循环的顶部判断条件, 并且如果条件一直为false, 那么就一直循环下去. (与while循环相反).  
+
 ```bash
 until [condition-is-true]
 do
@@ -304,6 +306,7 @@ done
 ```
 
 <h2 name="7">7 CONTINUE/BREAK语句</h2>
+
 ```bash
 LIMIT=19 # 上限
 a=0
