@@ -1,21 +1,30 @@
 # AdvancedBash
 
-- [1 分支选择](#1)  
+- [1 CASE语句](#1)  
 - [2 IF语句](#2)  
     - [2.1 文件测试](#2.1)
     - [2.2 整数比较](#2.2)
     - [2.3 字符串比较](#2.3)
 - [3 数字常量](#3)  
-- [4 循环与分支](#4)  
+- [4 FOR语句](#4)  
+- [5 WHILE语句](#5)  
+- [6 UNTIL语句](#6)  
+- [7 CONTINUE/BREAK语句](#7)  
 
-<h2 name="1">1 分支选择</h2>
-
+<h2 name="1">1 case语句</h2>
 ```bash
-case "$variable" in  
-    abc) echo "\$variable = abc";;
-    xyz) echo "\$variable = xyz";;
+case "$variable" in
+    $condition1" )
+    command
+    ;
+    $condition2" )
+    command
+    ;
 esac
 ```
+(1)对变量使用""并不是强制的, 因为不会发生单词分割.  
+(2)每句测试行, 都以右小括号)来结尾.  
+(3)每个条件判断语句块都以一对分号结尾.  
 <h2 name="2">2 IF语句</h2>
 
 ```bash
@@ -183,7 +192,7 @@ let "n++"
 ```
 Bash 不能处理浮点运算, 脚本中用bc或数学库才行
 
-<h2 name="4">4 循环与分支</h2>
+<h2 name="4">4 FOR语句</h2>
 
 for arg in [list] #list中的参数允许包含通配符.
 do
@@ -242,16 +251,14 @@ done
 
 
 directory=/usr/bin/
-fstring="Free Software Foundation" # 查看哪个文件中包含FSF.
-for file in $( find $directory -type f -name '*' | sort )
-do
+fstring="Free Software Foundation"
+for file in $( find $directory -type f -name '*' | sort ); do
     strings -f $file | grep "$fstring" | sed -e "s%$directory%%"
 done
 # 在"sed"表达式中,
-#+ 我们必须替换掉正常的替换分隔符"/",
-#+ 因为"/"碰巧是我们需要过滤的字符串之一.
-# 如果不用"%"代替"/"作为分隔符,那么这个操作将失败,并给出一个错误消息.(试一
-试).
+# 我们必须替换掉正常的替换分隔符"/",
+# 因为"/"碰巧是我们需要过滤的字符串之一.
+# 如果不用"%"代替"/"作为分隔符,那么这个操作将失败,并给出一个错误消息.
 
 OUTFILE=symlinks.list # 保存符号链接文件名的文件
 directory=${1-`pwd`}
@@ -267,7 +274,7 @@ do
 done
 
 ```
-WHILE
+<h2 name="5">5 WHILE语句</h2>
 ```bash
 while [condition]
 do
@@ -276,7 +283,6 @@ done
 
 LIMIT=10
 a=1
-
 while [ "$a" -le $LIMIT ]; do
     echo -n "$a "
     let "a+=1"
@@ -289,102 +295,26 @@ do
     ((a += 1))
 done
 ```
-until
-#这个结构在循环的顶部判断条件, 并且如果条件一直为false, 那么就一直循环下去. (与while循环相反).
+<h2 name="6">6 UNTIL语句</h2>
+这个结构在循环的顶部判断条件, 并且如果条件一直为false, 那么就一直循环下去. (与while循环相反).  
+```bash
 until [condition-is-true]
 do
     command...
 done
+```
 
-#!/bin/bash
-
+<h2 name="7">7 CONTINUE/BREAK语句</h2>
+```bash
 LIMIT=19 # 上限
-
-echo
-echo "Printing Numbers 1 through 20 (but not 3 and 11)."
-
 a=0
-
-while [ $a -le "$LIMIT" ]
-do
-a=$(($a+1))
-
-if [ "$a" -eq 3 ] || [ "$a" -eq 11 ] # 除了3和11.
-then
-continue # 跳过本次循环剩余的语句.
-fi
-
-echo -n "$a " # 在$a等于3和11的时候，这句将不会执行.
+while [ $a -le "$LIMIT" ];do
+    a=$(($a+1))
+    if [ "$a" -eq 3 ] || [ "$a" -eq 11 ]; then
+        continue
+        #break
+    fi
 done
-
-# 练习:
-# 为什么循环会打印出20?
-
-echo; echo
-
-echo Printing Numbers 1 through 20, but something happens after 2.
-
-##################################################################
-
-# 同样的循环, 但是用'break'来代替'continue'.
-
-a=0
-
-while [ "$a" -le "$LIMIT" ]
-do
-a=$(($a+1))
-
-if [ "$a" -gt 2 ]
-then
-break # 将会跳出整个循环.
-fi
-
-echo -n "$a "
-done
-
-echo; echo;
-
-break命令可以带一个参数. 一个不带参数的break命令只能退出最内层的循环, 而break N可以
-退出N层循环.
-而continue N将会把N层循环的剩余代码都去掉, 但是循环的次数不变
-
-
-case "$variable" in
-    $condition1" )
-    command
-    ;
-    $condition2" )
-    command
-    ;
-esac
-对变量使用""并不是强制的, 因为不会发生单词分割.
-每句测试行, 都以右小括号)来结尾.
-每个条件判断语句块都以一对分号结尾 .
-case块以esac (case的反向拼写)结尾.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
+break N可以退出N层循环,不带参数的break命令只能退出最内层的循环.  
+continue N 同理，但很少用.  
