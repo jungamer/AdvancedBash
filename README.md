@@ -286,11 +286,10 @@ a=1
 while [ "$a" -le $LIMIT ]; do
     echo -n "$a "
     let "a+=1"
-echo;
+done
 
 ((a = 1))
-while (( a <= LIMIT ))
-do
+while (( a <= LIMIT )); do
     echo -n "$a "
     ((a += 1))
 done
