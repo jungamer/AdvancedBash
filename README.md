@@ -215,7 +215,8 @@ do
     set -- $planet 
     echo "$1 $2"
 done
-#说明：set -- "$X"就是把X的值返回给$1; set -- $X就是把X作为一个表达式的值一一返回,根据分隔符IFS，把值依次赋给$1,$2,$3。如可以IFS="*"。
+#set -- "$X"就是把X的值返回给$1; 
+#set -- $X  就是把X作为一个表达式的值一一返回,根据分隔符IF,把值依次赋给$1,$2,$3。如可以IFS="*"。
 
 IFS=:
 for dir in $PATH;do
@@ -248,7 +249,6 @@ NUMBERS="9 7 3 8 37.53"
 for number in `echo $NUMBERS`; do
     echo -n "$number "
 done
-
 
 directory=/usr/bin/
 fstring="Free Software Foundation"
