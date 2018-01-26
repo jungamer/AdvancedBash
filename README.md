@@ -12,6 +12,7 @@
 - [7 CONTINUE/BREAK语句](#7)  
 - [8 常用命令](#8)  
     - [8.1 echo](#8.1)
+    - [8.2 xargs](#8.2)
 - [9 正则表达式](#9)  
 
 <h2 name="1">1 case语句</h2>
@@ -346,5 +347,33 @@ ls -l /usr/share/apps/kjezz/sounds
 echo `ls -l /usr/share/apps/kjezz/sounds`
 
 ```
+
+<h3 name="8.2">8.2 xargs</h3>
+xargs从stdin或者管道中读取数据，  
+可以用来处理由find或grep输出的一长串的文件名列表,  
+xargs会分割这一长串字符串成很多子串,默认会以空白字符（空格、TAB、换行符）来分割；  
+但是如果文件名里包含了空格则需要find -print0以及xargs -0 来让find产生的文件名以NULL分割，  
+xargs 同样以NULL分割.  
+
+```bash
+find ./music -name "*.mp3" -print0 | xargs -0 ls
+find . -name "*.sh" -print0 | xargs -0 -I {} mv {} ~/back.scripts
+#用了-I 则指定后面的{}代替xargs分割出来的字符串  
+
+ls -1 *.sh | xargs
+#把多行输出转成一行  
+
+ls | xargs  -p  -n  1 ar r lib.a
+#-n 表示每次传入的参数数量,-p 每次打印出运行的指令，并且询问是否执行
+
+ls | xargs -n6 | xargs -I{} echo {} - some files in the directory
+
+#If the current directory contains files chap1 through chap10, the output constructed will be the following:
+#chap1 chap2 chap3 chap4 chap5 chap6 - some files in the directory
+#chap7 chap8 chap9 chap10 - some file in the directory
+
+```
+
+
 
 <h2 name="9">9 正则表达式</h2>
