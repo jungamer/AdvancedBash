@@ -350,11 +350,12 @@ echo `ls -l /usr/share/apps/kjezz/sounds`
 ```
 
 <h3 name="8.2">8.2 xargs</h3>
-xargs从stdin或者管道中读取数据，  
-可以用来处理由find或grep输出的一长串的文件名列表,  
-xargs会分割这一长串字符串成很多子串,默认会以空白字符（空格、TAB、换行符）来分割；  
-但是如果文件名里包含了空格则需要find -print0以及xargs -0 来让find产生的文件名以NULL分割，  
-xargs 同样以NULL分割.  
+
+xargs从stdin或管道中读取数据,  
+主要用来处理由find或grep输出的一长串的文件名列表,  
+xargs会把这一长串字符串分割成很多子串,默认会以空白字符（空格、TAB、换行符）作为分割符,  
+但如果文件名里包含了空格则需要find -print0产生以NULL为分割符的字符串,  
+以及xargs -0 来让xargs按照NULL来分割find输出的字符串.  
 
 ```bash
 find ./music -name "*.mp3" -print0 | xargs -0 ls
