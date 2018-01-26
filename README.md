@@ -1,4 +1,4 @@
-# AdvancedBash
+# Bash
 
 - [1 CASE语句](#1)  
 - [2 IF语句](#2)  
@@ -10,6 +10,9 @@
 - [5 WHILE语句](#5)  
 - [6 UNTIL语句](#6)  
 - [7 CONTINUE/BREAK语句](#7)  
+- [8 常用命令](#8)  
+    - [8.1 echo](#8.1)
+- [9 正则表达式](#9)  
 
 <h2 name="1">1 case语句</h2>
 ```bash
@@ -320,3 +323,28 @@ done
 ```
 break N可以退出N层循环,不带参数的break命令只能退出最内层的循环.  
 continue N 同理，但很少用.  
+
+<h2 name="8">8 常用命令</h2>
+
+<h3 name="8.1">8.1 echo</h3>
+echo 打印一个表达式或变量,需要使用
+-e 来打印转义字符; 
+每个 echo 命令都会在终端上新起一行,但是-n 选项将会阻止新起一行;
+echo 命令可以用来作为一系列命令的管道输入;
+
+```bash
+if echo "$VAR" | grep -q txt
+then
+    echo "$VAR contains the substring sequence \"txt\""
+fi
+
+```
+echo `command`将会删除任何由命令产生的换行符;
+
+```bash
+ls -l /usr/share/apps/kjezz/sounds
+echo `ls -l /usr/share/apps/kjezz/sounds`
+
+```
+
+<h2 name="9">9 正则表达式</h2>
